@@ -1,0 +1,142 @@
+Домашнее задание № 2. 
+
+Задача "Конус"
+Вычислить объем и полную поверхность усеченного конуса. 
+V = 1/3 * Pi * h * (R^2 + R*r + r^2)
+S = Pi * (R^2 + (R+r)*l + r^2)
+
+Решение:
+#include <iostream>
+#define _USE_MATH_DEFINES // математические константы
+#include <math.h>
+using namespace std;
+void main()
+{
+	setlocale(LC_ALL, "rus");
+	float V, h, r, R, S, l;
+	
+	cout << "Введите свойства усеченного конуса" << endl;
+	cout << "h = ";
+	cin >> h;
+	cout << "R = ";
+	cin >> R;
+	cout << "(r < R): r = ";
+	cin >> r;
+	if (r >= R) cout << "r >= R - не удовлетворяет условиям" << endl;
+	else {
+		l = sqrt((R - r) * (R - r) + (h * h));
+		V = (h * M_PI * (pow(R, 2)) + (R * r) + pow(r, 2)) / 3;
+		S = M_PI * (pow(R, 2) + (R + r) * l + pow(r, 2));
+		cout << "V = " << V << endl;
+		cout << "S = " << S << endl;
+	}
+}
+
+Задача "Разветвление"
+Для произвольных x и a вычислить систему из двух уравнений:
+(1): a*ln|x|, |x| < 1
+(2): (a - x^2)^0.5, |x| >= 1
+
+Решение:
+#include <iostream>
+#include <math.h>
+using namespace std;
+void main()
+{
+	setlocale(LC_ALL, "rus");
+	float a, x, w;
+	cout << "(1): a*ln|x|, |x| < 1" << endl;
+	cout << "(2): (a - x^2)^0.5, |x| >= 1" << endl;
+	cout << "Введите a: ";
+	cin >> a;
+	cout << "Введите x: ";
+	cin >> x;
+	if ((abs(x) < 1) and (x != 0)) {
+	
+		cout << "w = " << a * log(abs(x)) << endl;
+	}
+	else if ((a - x * x >= 0) and (abs(x) >= 1)) {
+		
+		cout << "w = " << sqrt(a - pow(x, 2)) << endl;;
+	}
+	else cout << "Не удовлетворяет области определения" << endl;
+
+}
+
+Задача "Функция"
+Для произвольных x, y, b вычислить функцию: z = ln(b-y)*sqrt(b-x)
+
+Решение:
+include <iostream>
+#include <math.h>
+using namespace std;
+void main()
+{
+	setlocale(LC_ALL, "rus");
+	float x, y, b, z;
+	cout << "Функция вида: z = ln(b-y)*sqrt(b-x)" << endl;
+	cout << "Введите x: ";
+	cin >> x;
+	cout << "Введите y: ";
+	cin >> y;
+	cout << "Введите b: ";
+	cin >> b;
+	if (((b - y) > 0) and ((b - x) >= 0)) {
+		z = log(b - y) * (sqrt(b - x));
+		cout << "z = " << z << endl;
+	}
+	else cout << "Не удовлетворяет области определения" << endl;
+
+}
+
+Задача "Порядок"
+Распечатать 10 последовательных натуральных чисел в возрастающем порядке начиная с произвольного натурального числа N.
+
+Решение: 
+#include <iostream>
+#include <math.h>
+using namespace std;
+void main()
+{
+	setlocale(LC_ALL, "rus");
+	int count, N;
+	cout << "Введите N: ";
+	cin >> N;
+	for (N, count = 0; count < 10; N++, count++) {
+		cout << N << endl;
+	}
+}
+
+Задача "Табуляция"
+Протабулировать функцию вида: у = (x^2 - 2x + 2) / (x - 1) при изменении x от -4 до 4 с шагом 0.5
+Дополнительно: для введенного значения y найти решения.
+
+Решение:
+#include <iostream>
+#include <math.h>
+using namespace std;
+void main()
+{
+	setlocale(LC_ALL, "rus");
+	float x, y, i, D;
+	for (x = -4; x <= 4; x += 0.5) {
+		if (x == 1) cout << "Нет решений" << endl;
+		else {
+			y = (x * x - 2 * x + 2) / (x - 1);
+			cout << "Для x = " << x << " y = " << y << endl;
+		}
+	}
+	cout << "Введите y: ";
+	cin >> y;
+	D = pow(y + 2, 2) - 4 * (y + 2);
+	if (D == 0) {
+		cout << "x = " << ((y + 2) / 2);
+	}
+	else if (D > 0) {
+		cout << "x1 = " << (((y + 2) + sqrt(D)) / 2) << endl;
+		cout << "x2 = " << (((y + 2) - sqrt(D)) / 2) << endl;
+	}
+	else {
+		cout << "Для данного у нет решений";
+	}
+}
