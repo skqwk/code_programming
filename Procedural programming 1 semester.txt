@@ -140,3 +140,716 @@ void main()
 		cout << "Для данного у нет решений";
 	}
 }
+
+
+Домашнее задание №3
+
+Задача "Заём" 
+Месячная выплата m по займу S рублей на n лет под процент p вычисляется по формуле:
+m = (S * r * pow(1 + r, n)) / (12 * (pow(1 + r, n) - 1));
+
+Решение:
+#include<iostream>;
+#include <math.h> 
+using namespace std;
+
+void main()
+{
+	setlocale(LC_ALL, "Rus");
+	double S, n, m, r;
+	int p;
+	cout << "Введите значения S, n, p: " << endl;
+	cin >> S >> n >> p;
+	if ((S <= 0) or (n <= 0) or (p <= 0)) cout << "Некорректные значения";
+	else {
+		cout << "\n";
+
+		r = (double)p / 100;
+
+		m = (S * r * pow(1 + r, n)) / (12 * (pow(1 + r, n) - 1));
+		cout << "Значение m = " << m << endl;
+	}
+
+}
+
+Задача "Ссуда"
+Под какой процент p выдана ссуда величиной S рублей, которая гасится месячными выплатами величиной m в течение n лет. Формула из предыдущей задачи.
+
+Решение:
+#include<iostream>;
+#include <math.h> 
+using namespace std;
+
+void main()
+{
+	setlocale(LC_ALL, "Rus");
+	double S, n, m, r, a, min = numeric_limits< double >::max();
+	int pmin;
+	cout << "Введите значения S, m, n: " << endl;
+	cin >> S >> m >> n;
+	if ((S <= 0) or (m <= 0) or (n <= 0)) cout << "Некорректные значения";
+	else {
+		for (int p = 0; p <= 100; p++)
+		{
+			r = (double)p / 100;
+			a = ((S * r * pow(1 + r, n)) / (12 * (pow(1 + r, n) - 1)));
+			if (abs(a - m) < min)
+			{
+				min = abs(a - m);
+				pmin = p;
+			}
+
+		}
+		cout << "Целое число процентов: " << pmin; 
+	}
+}
+
+Задача "Копирование файла"
+Создать на диске текстовый файл и скопировать его на экран.
+
+Решение:
+#include<iostream>
+#include<fstream> // подключаем библиотеку
+#include<string>
+using namespace std;
+
+
+int main() 
+{
+	setlocale(LC_ALL, "Rus");
+	string a;
+	cout << a;
+	ofstream out("C:\\C++ вывод\\WERT.txt"); // описываем переменную и сразу же создаем и открываем
+	for (int i = 0; i < 56; i++)
+	{
+		out << "Stucture222 " << endl;  // содержимое файла
+	}
+	out.close();
+
+	ifstream in("C:\\C++ вывод\\WERT.txt"); // производим чтение файла
+	while (in) // пока есть данные, которые мы можем прочитать
+	{
+		getline(in, a); // записываем в строку
+		cout << a << endl; // выводим
+	}
+	in.close();
+	return 0;
+}
+
+Задача "Фильтр" 
+Вывести на экран только числа из созданного Вами на диске текстового файла, содержащего буквы и числа.
+
+Решение №1:
+#include <iostream>
+#include<fstream> // заголовочный файл для работы с чтением и записью в файлы
+#include<string>
+using namespace std;
+int main()
+{
+	setlocale(LC_ALL, "Rus");
+	ifstream txt("C:\\C++ вывод\\order.txt");
+	string a;
+	while (txt) // пока есть данные, которые мы можем прочитать
+	{
+		getline(txt, a); // получаем данные в строку 
+	}
+
+	for (int i = 0; i < a.size(); i++)  if (isdigit(a[i])) cout << a[i]; 
+	txt.close();
+	return 0;
+}
+
+Решение №2:
+#include <iostream>
+#include<fstream> // заголовочный файл для работы с чтением и записью в файлы
+#include<string>
+using namespace std;
+int main()
+{
+	setlocale(LC_ALL, "Rus");
+	ifstream txt("C:\\C++ вывод\\order.txt");
+	int x;
+	string a;
+	while (txt) // пока есть данные, которые мы можем прочитать
+	{
+		getline(txt, a); // получаем данные в строку 
+		x = a.size(); // определяем длину строки
+	}
+	size_t i = 0;
+	for (; i < a.size(); i++) { if (isdigit(a[i])) cout << a[i]; } // использование ф-ции
+}
+
+
+
+Задача "Сортировка букв" 
+Задать строку из 30 букв и расставить их в алфавитном порядке.
+
+Решение:
+#include <iostream>
+#include <windows.h> // заголовочный файл для функций SetConsoleCP и SetConsoleOutputCP
+#include <string>
+
+using namespace std;
+int main()
+{
+    SetConsoleCP(1251); // установка кодовой страницы win-cp 1251 в поток ввода (чтобы кириллица вводилась)
+    SetConsoleOutputCP(1251); // аналогично - выводилась
+    string a;
+    cout << "Введите строку длиной 30 символов: " << endl;
+    cin >> a;
+    // С помощью вложенного цикла бежим по массиву, сравниваем числовое значение типа char, сортируя тем самым буквы.
+    for (int i = 0; i < a.size(); i++)
+    {
+        for (int i = 0; i < (a.size() - 1); i++)
+        {
+            if (int(a[i]) >= int(a[i + 1]))
+            {
+                int k = a[i];
+                a[i] = a[i + 1];
+                a[i + 1] = k;
+            }
+        }
+    }
+    cout << "Отсортированная строка: " << endl;
+    for (int i = 0; i < a.size(); i++)
+    {
+        cout << a[i];
+    }
+
+    cout << "\nУдалены повторяющиеяся элементы: " << endl;
+    for (int i = 0; i < a.size(); i++) 
+    {
+        if (a[i] != a[i+1]) cout << a[i];
+    }
+}
+
+Домашнее задание №4
+
+Задача "Файл"
+Создать файл, записать в него 10 чисел, закрыть, потом вновь открыть файл и найти
+сумму чисел.
+
+Решение:
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+void main()
+{
+	setlocale(LC_ALL, "Rus");
+	// Ввод чисел в массив и проверка суммы
+	const int size = 10;
+	double a[size];
+	double S1 = 0;
+	cout << "Введите " << size << " чисел через пробел: \n";
+	for (int i = 0; i < size; i++)
+	{
+		cin >> a[i];
+		S1 += a[i];
+	}
+	cout << "Сумма введенных чисел = " << S1 << endl;
+
+	// Создание файла и запись введенных чисел через пробел
+	ofstream out("C:\\C++ вывод\\Nums.txt");
+	for (int i = 0; i < size; i++)
+	{
+		out << a[i] <<" ";
+	}
+	out.close();
+	// Снова открываем файл и считываем в строку записанные числа
+	string b;
+	ifstream in("C:\\C++ вывод\\Nums.txt"); 
+	while (in) 
+	{
+		getline(in, b);
+	}
+	in.close();
+	// Вывод строки
+	cout << b << endl;
+
+	// Представляем строку в виде массива и проходим по нему циклом
+	double Y = 0, S2 = 0, X = 0; // Объявляем и иницализируем переменные.
+	int step =1;
+	bool sign = false; // если перед числом стоит минус
+	bool dot = false; // если внутри числа встречается точка - есть дробная часть
+	for (int i = 0; i < b.size(); i++)
+	{	
+		if (b[i] == '-') {
+			i++;  // знак минуса пропускается, переходим на следующий символ
+			sign = true;
+		}
+
+		if (b[i] == '.') {
+			i++;  // символ точки пропускается
+			dot = true;
+		}
+		
+		if (b[i] != ' ')  // Если разрыва нет, значит число имеет больше одного разряда и есть ли дробная часть мы не узнали
+		{
+			if (!dot) // для целой части
+			Y = Y * 10 + (b[i] - '0'); // конвертируем char в int, учитывая многоразрядность числа
+			if (dot) // для дробной части
+			{
+				X = X + (b[i] - '0') * (pow(0.1, step));
+				step++; // счетчик разрядов
+		}
+		else
+		{
+			Y = Y + X; // соединяем целую и дробную часть
+			if (sign) Y = -Y; // учитываем знак
+			S2 += Y; // Записываем в сумму
+			// Обнуляем, перезаписываем все переменные, к-е будут использоваться в след. итерации
+			Y = 0;
+			X = 0; 
+			sign = false;
+			dot = false;
+			step = 1;
+		}
+	}
+	cout <<"Сумма записанных чисел = " << S2;
+	
+}
+
+Задача "Знак числа"
+Определить знак введенного с клавиатуры числа, использовав подпрограмму-функцию
+
+Решение:
+#include <iostream>
+using namespace std;
+
+void sign(int x)
+{
+    if (x > 0)
+        cout << '+';
+    if (x == 0)
+        cout << '0';
+    if (x < 0)
+        cout << '-';
+}
+
+void main()
+{
+    setlocale(LC_ALL, "Rus");
+    int a;
+    cout << "Введите число: ";
+    cin >> a;
+    cout << "Знак числа: ";
+    sign(a);
+}
+
+Задача "Былая слава"
+Напечатать американский флаг "Былая слава" 1912 года.
+
+Решение:
+#include <iostream>
+#include <string>
+using namespace std;
+void main()
+{
+    setlocale(LC_ALL, "Rus");
+    char b = '=', a = '*';
+    for (int i = 0; i < 13; i++)
+    {
+        for (int j = 0; j < 35; j++)
+        {
+            if ((i < 6) and (j < 8))
+            {
+                cout << a;
+            }
+            else
+                cout << b;
+        }
+        cout << endl;
+    }
+}
+
+
+
+Задача "Синусоида"
+Напечатать график функции y = sin(x)
+
+Решение:
+#include <iostream>
+#include <math.h>
+using namespace std;
+void main()
+{
+    double f, a;
+    const int X = 197, Y = 51; // размер осей координат 197x51
+    char arr[X][Y]; // множество точек
+    // создали пустые оси координат
+    for (int y = 0; y < Y; y++)
+    {
+        for (int x = 0; x < X; x++)
+        {
+          arr[x][y] = ' ';
+        }
+    }
+
+    //рисуем график
+    int k = 13; // коэффициент увеличения
+    for (a = -4.4; a < 4.4; a+=0.001)
+    {
+        f = sin(a);
+        arr[X/2 + int(round(a * k))][Y/2 + int(round(f * k))] = '*';
+    }
+
+    //строим оси
+
+    for (int y = 0; y < Y; y++)
+    {
+        for (int x = 0; x < X; x++)
+        {
+            if (x == X/2) arr[x][y] = '|';
+            if (y == Y/2) arr[x][y] = '-';
+            if ((x == X/2) && (y == Y/2)) arr[x][y] = 'o';
+        }
+    }
+    //вывод
+    for (int y = 0; y < Y; y++) 
+    {
+        for (int x = 0; x < X; x++) 
+        {
+            cout<<(arr[x][y]);
+        }
+    }
+}
+
+Задача "Автоматный распознаватель"
+Декодировать римскую запись числа состоящего из любого кол-ва знаков
+I - 1, V - 5, X - 10, L - 50, C - 100, D - 500, M - 1000
+
+Решение:
+#include <iostream>
+#include <string>
+using namespace std;
+
+void main()
+{
+    setlocale(LC_ALL, "Rus");
+    string a;
+    cout << "Введите число, используя символы I, V, X, L, C, D, M: ";
+    cin >> a;
+   // for (int i = 0; i < a.size(); i++) cout << a[i] << endl; // посимвольный вывод строки
+    int x = a.size() + 1;
+    int *arr = new int[a.size()+1]; // Выделение памяти для динамического массива, на 1 больше, потому что в последнем цикле мы будем сравнивать индексы i и i+1
+    
+    // в массив под номер символа записываем соответствующее число
+    bool err_symb = false;
+    for (int i = 0; i < a.size(); i++) {
+        switch (a[i]) {
+        case 'I':
+            arr[i] = 1;
+            break;
+        case 'V':
+            arr[i] = 5;
+            break;
+        case 'X':
+            arr[i] = 10;
+            break;
+        case 'L':
+            arr[i] = 50;
+            break;
+        case 'C':
+            arr[i] = 100;
+            break;
+        case 'D':
+            arr[i] = 500;
+            break;
+        case 'M':
+            arr[i] = 1000;
+            break;
+        default:
+            err_symb = true;
+            break;
+        }
+    }
+    // блок с проверками
+    bool err_rep = false;
+    arr[a.size()] = 0;
+    int t = arr[0];
+    int count = 1;
+    for (int i = 1; i < a.size(); i++) {
+        if (arr[i] == t) {
+            count++;
+        }
+        else if (arr[i] > t && count >= 2) {
+            err_rep = true;
+        }
+        else if (arr[i] > t) {
+            t = arr[i];
+            count = 1;
+        }
+        else if (arr[i] < t) {
+            t = arr[i];
+            count = 1;
+        }
+
+    }
+
+    int sum_err = 0;
+    int max_err = 0;
+    for (int i = 0; i < a.size(); i++) {
+        if (arr[i] == arr[i + 1]) sum_err++;
+        else { 
+            if (sum_err > max_err) max_err = sum_err;
+            sum_err = 0; }
+    }
+    if (err_rep) cout << "Перед большим по значению символом может быть только один меньший" << endl;
+    else if (err_symb) cout << "Число не распознано" << endl;
+    else  if (max_err > 2) cout << "Нестандартная запись"; 
+    // перевод числа
+    else {
+        int num = 0;
+        
+        for (int i = 0; i < a.size(); i++) {
+            if (arr[i] >= arr[i + 1]) num += arr[i];
+            else {
+                num += arr[i + 1] - arr[i];
+                i++;
+            }
+        }
+        delete[] arr; // очистка памяти
+
+        cout << "Число: " << num;
+    }
+}
+
+Задача "Генератор случайных чисел"
+Построить генератор псевдослучайных чисел
+
+Решение:
+#include <iostream>
+using namespace std;
+
+int v1(int i) {
+    if (i == 0) return 1;
+    int s1 = v1(i-1);
+    return s1 = (37 * s1 + i) % 64;
+}
+
+int v2(int i) {
+    if (i == 0) return 1;
+    int s2 = v2(i-1);
+    return s2 = (25173 * s2 + i) % 65537;
+}
+
+void main()
+{
+    setlocale(LC_ALL, "Rus");
+
+    for (int i = 0; i < 10; i++) {
+        cout << "s1-" << i << " = " << v1(i) << "\t s2-" << i << " = " << v2(i) << endl;
+    }
+}
+
+Задача "Умножение матриц"
+Три продавца продают четыре вида товаров 
+Определить: Какой продавец выручил больше всего денег с продаж, какой меньше?
+Какой получил наибольшие комиссионный, какой наименьшие?
+Чему равна общая сумма денег, вырученных за проданные товары
+Сколько всего комиссионных получили продавцы
+Чему равна общая сумма денег, прошедших через руки продавцов?
+
+Решение:
+#include <iostream>
+using namespace std;
+int main()
+{
+    setlocale(LC_ALL, "Rus");
+    const int M = 3, N = 4, K = 2;
+    int A[M][N]{ {5, 2, 0, 10}, {3, 5, 2, 5}, {20, 0, 0, 0} };
+    double B[N][K]{ {1.20, 0.50}, {2.80, 0.40}, {5.00, 1.00}, {2.00, 1.50} };
+    double C[M][K]{};
+    for (int k = 0; k < K; k++) 
+    {
+        for (int i = 0; i < M; i++)
+        {
+            for (int j = 0; j < N; j++)
+            {
+                C[i][k] += A[i][j] * B[j][k];
+            }
+        }
+    }
+    cout << "Матрица C: \n";
+    for (int i = 0; i < M; i++)
+    {
+        for (int j = 0; j < K; j++)
+        {
+            cout << C[i][j] << "\t";
+        }
+        cout << endl;
+    }
+
+
+    // Какой продавец выручил больше всего денег с продаж, какой меньше?
+    int i = 0, j = 0;
+    double min = C[i][j], max = C[i][j];
+    int mai, mii;
+
+    for (i; i < M; i++)
+    {
+        if (C[i][j] >= max) 
+        {
+            max = C[i][j];
+            mai = i;
+        }
+        if (C[i][j] <= min) 
+        { 
+            min = C[i][j]; 
+            mii = i;
+        }
+    }
+
+    cout << "Больше всего выручил продавец №" << mai + 1 << "\nМеньше всего выручил продавец №" << mii + 1 << endl;
+
+
+    // Какой получил наибольшие комиссионные, какой наименьшие?
+    i = 0, j = 1;
+    min = C[i][j], max = C[i][j];
+
+    for (i; i < M; i++)
+    {
+        if (C[i][j] >= max)
+        {
+            max = C[i][j];
+            mai = i;
+        }
+        if (C[i][j] <= min)
+        {
+            min = C[i][j];
+            mii = i;
+        }
+    }
+    cout << "Самые большие комиссионные получил продавец №" << mai + 1 << "\nСамые маленькие комиссионные получил продавец №" << mii + 1 << endl;
+    // Чему равна общая сумма денег, вырученных за проданные товары?
+    i = 0, j = 0;
+    double S = 0;
+     for (i; i < M; i++)
+    {
+         S += C[i][j];
+    }
+     cout << "Общая сумма денег, вырученных за проданные товары: " << S << endl;
+
+     // Сколько всего комиссионных получили продавцы?
+
+     i = 0, j = 1;
+     double Kom = 0;
+     for (i; i < M; i++)
+     {
+         Kom += C[i][j];
+     }
+     cout << "Всего комиссионных получили продавцы: " << Kom << endl;
+
+     // Чему равна общая сумма денег, прошедших через руки продавцов?
+     cout << "Общая сумма денег, прошедших через руки продавцов: " << Kom+S << endl;
+
+    return 0;
+}
+
+Задача "Системы счисления"
+Программа должна считывать с клавиатуры число, записанное
+в одной СС и выводить на экран это число в записи по другому
+основанию
+
+Решение:
+#include <iostream>
+#include <math.h>
+#include <string>
+using namespace std;
+
+long long trance10(string a, int N, int Z); // функция переводит в десятичную из N-ой
+string trance(string a, int N, int Z, bool sign); // функция переводит из десятичной в Z-ю СС
+
+// a - число, 
+int main() {
+	setlocale(LC_ALL, "Rus");
+	string a; // старое число
+	int N, Z; // N - старое основание, Z - новое основание
+	bool sign = false; // если введутся отрицательные
+	cout << "Введите число, старое основание, новое основание: ";
+	cin >> a >> N >> Z;
+	if (N <= 1 || Z <= 1) {
+		cout << "Основание СС меньше 2" << endl;
+	}
+
+	else if (a[0] == '0') // Если введенное число 0
+	{
+		cout << 0;
+	}
+
+	else
+	{
+		if (a[0] == '-') // если есть минус
+		{
+			a.erase(0, 1);  // знак минуса убирается
+			sign = true;
+		}
+		cout << (trance(a, N, Z, sign));
+	}
+	return 0;
+}
+
+long long trance10(string a, int N, int Z)
+{
+	// Если в записи числа, есть цифры, которые не соответствуют заданной СС, проверка:
+	bool Error = false;
+	long long Rn = 0;
+	for (int i = 0; i < a.size(); i++)
+	// проверка на правильный ввод
+	{
+		if ((a[i] >= 'A') && a[i] - 'A' + 10 >= N) Error = true;
+		if ((a[i] < 'A') && (a[i] - '0' >= N)) Error = true;
+	}
+
+	if (!Error)
+	{
+		for (int i = 0; i < a.size(); i++)
+
+			if (int(a[i]) > 64) // если в числе есть буквы, т.к. значение (int)'A' = 65
+			{
+				Rn += (a[i] - 'A' + 10) * pow(N, (a.size() - i - 1));
+			}
+			else // если цифры
+			{
+				Rn += (a[i] - '0') * pow(N, (a.size() - i - 1));
+			}
+		return Rn;
+	}
+	else cout << "Введенные цифры/символы не соответствуют указанной СС" << endl;
+	return -1;
+}
+
+
+
+string trance(string a, int N, int Z, bool sign)
+{
+	int Rn = trance10(a, N, Z);
+	string Rz;
+	while (Rn > 0)
+	{
+		if (Rn % Z > 9) // если буквы
+		{
+			Rz.append(1, 'A' - 10 + (Rn % Z)); // добавляем в строку с помощью функции append
+			Rn /= Z;
+		}
+		else
+		{
+			Rz.append(1, '0' + (Rn % Z));
+			Rn /= Z;
+		}
+
+	}
+	for (int i = 0; i < Rz.size() / 2; i++) // так как функция append записывает остатки слева направо, то нужно перевернуть запись числа
+	{
+		char b = Rz[i];
+		int k = Rz.size() - 1 - i;
+		Rz[i] = Rz[k];
+		Rz[k] = b;
+	}
+	if (sign) return '-' + Rz;
+	return Rz;
+}
+
+
+
